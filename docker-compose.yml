@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  counting-service:
+    build:
+      context: ./counting-service
+      dockerfile: Dockerfile
+    container_name: counting-service
+    ports:
+      - "9001:9001"
+    environment:
+      - PORT=9001
+    networks:
+      - counting-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9001/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+  dashboard-service:
+    build:
+      context: ./dashboard-service
+      dockerfile: Dockerfile
+    container_name: dashboard-service
+    ports:
+      - "8080:8080"
+    environment:
+      - COUNTING_SERVICE_URL=http://counting-service:9001
+    networks:
+      - counting-network
+    depends_on:
+      - counting-service
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+networks:
+  counting-network:
+    driver: bridge
+
+# Made with Bob
