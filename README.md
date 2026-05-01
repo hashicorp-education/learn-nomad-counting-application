@@ -1,6 +1,6 @@
 # Counting Dashboard - Multi-Architecture Microservices
 
-A simple microservices application demonstrating service-to-service communication with support for **AMD64**, **ARM64**, **Darwin**, and **Windows** architectures. Based on the HashiCorp demo-consul-101 counting service example.
+A simple microservices application demonstrating service-to-service communication with support for **AMD64**, **ARM64**, **Darwin**, and **Windows** architectures. Created with IBM Bob, based on the HashiCorp demo-consul-101 counting service example.
 
 ## 🏗️ Architecture
 
